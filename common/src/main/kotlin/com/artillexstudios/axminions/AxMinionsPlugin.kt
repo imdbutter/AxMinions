@@ -28,6 +28,7 @@ import com.artillexstudios.axminions.minions.Minion
 import com.artillexstudios.axminions.minions.MinionTicker
 import com.artillexstudios.axminions.minions.Minions
 import com.artillexstudios.axminions.minions.miniontype.CollectorMinionType
+import com.artillexstudios.axminions.minions.miniontype.ButcherMinionType
 import com.artillexstudios.axminions.minions.miniontype.FarmerMinionType
 import com.artillexstudios.axminions.minions.miniontype.FisherMinionType
 import com.artillexstudios.axminions.minions.miniontype.LumberMinionType
@@ -89,6 +90,7 @@ class AxMinionsPlugin : AxPlugin() {
             it.register(SellerMinionType())
             it.register(FisherMinionType())
             it.register(SlayerMinionType())
+            it.register(ButcherMinionType())
         }
 
         val handler = BukkitCommandHandler.create(this)

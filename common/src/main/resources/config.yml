@@ -1,137 +1,139 @@
-# How often should the plugin save all minions?
-# The plugin saves changes live, this is only for updating minion stats in the database.
-# For this change to take effect, you need to restart your server!
+# Как часто плагин должен сохранять всех миньонов?
+# Плагин сохраняет изменения в реальном времени, это только для обновления статистики миньонов в базе данных.
+# Чтобы это изменение вступило в силу, необходимо перезапустить сервер!
 auto-save-minutes: 3
 
-# How far the storage chest can be from the minion
+# Как далеко может находиться сундук-хранилище от миньона
 max-linking-distance: 30
 
-# If players need to have 'axminions.place.<minion>' permission
-# to be able to place this minion
+# Нужно ли игрокам иметь разрешение 'axminions.place.<миньон>'
+# чтобы иметь возможность разместить этого миньона
 place-permissions: false
 
-# The default amount of minions a player can have.
-# This setting can be overwritten by setting the 'axminions.limit.<amount>' permission!
+# Стандартное количество миньонов, которое может иметь игрок.
+# Это значение может быть переопределено разрешением 'axminions.limit.<количество>'!
 default-minion-limit: 5
 
-# If true, only the owner of this minion can break it
-# If false, everyone, who can break blocks at said location can break this minion
-# You should enable this, if you aren't using a supported protection plugin!
+# Если true, только владелец этого миньона может сломать его
+# Если false, каждый, кто может ломать блоки в этом месте, может сломать миньона
+# Вам следует включить это, если вы не используете поддерживаемый плагин защиты!
 only-owner-break: true
 
-# If true, only the owner of this minion can open it's GUI
-# If false, everyone, who can break blocks at said location can open the GUI of this minion
-# You should enable this, if you aren't using a supported protection plugin!
+# Если true, только владелец этого миньона может открывать его GUI
+# Если false, каждый, кто может ломать блоки в этом месте, может открыть GUI этого миньона
+# Вам следует включить это, если вы не используете поддерживаемый плагин защиты!
 only-owner-gui: true
 
-# Should minions show holograms if they have an issue?
-# (They won't complain about not having a girlfriend, though!)
-# You can configure these messages in the messages.yml
+# Должны ли миньоны показывать голограммы при возникновении проблемы?
+# (Они не будут жаловаться на отсутствие девушки!)
+# Вы можете настроить эти сообщения в messages.yml
 display-warnings: true
 
-# If set to true, the minion will not break the tool, it will just stay at 1 durability (and the minion will be stopped)
-# If set to false, the minion can break the tool
+# Если установлено в true, миньон не сломает инструмент, он останется с 1 прочностью (и миньон остановится)
+# Если установлено в false, миньон может сломать инструмент
 can-break-tools: true
 
-# The limit to use for islands
+# Лимит миньонов для использования на островах
 island-limit: 10
 
-# If the minion should be able to take durability from it's held item
+# Должен ли миньон тратить прочность своего инструмента
 use-durability: true
 
-# If the minion should pull new tools from the chest it's connected to
+# Должен ли миньон доставать новые инструменты из сундука, к которому он подключён
 pull-tools-from-chest: false
 
-# If the minion should work when the owner is offline (only if the chunk is loaded)
+# Должен ли миньон работать, когда владелец не в сети (только если чанк загружен)
 work-when-owner-offline: true
 
-# The maximum amount of blocks a single lumber minion may break at a time
+# Максимальное количество блоков, которое один миньон-лесоруб может сломать за один тик
 max-breaks-per-tick: 200
 
-# What type of message we should send when the upgrade fails
-# due to insufficient funds
-# Possible options: chat, title, subtitle, actionbar
-upgrade-fail: "chat"
+# Какой тип сообщения отправлять при неудачном улучшении
+# из-за недостаточных средств
+# Возможные варианты: chat, title, subtitle, actionbar
+upgrade-fail: chat
 
-# The sound played when you upgrade a minion
-# set to "" to disable!
-# For a list of sounds visit: https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
-upgrade-sound: "ENTITY_PLAYER_LEVELUP"
+# Звук, который проигрывается при улучшении миньона
+# Установите "" чтобы отключить!
+# Список звуков: https://jd.papermc.io/paper/1.20/org/bukkit/Sound.html
+upgrade-sound: ENTITY_PLAYER_LEVELUP
 
 database:
-  # Can be H2 (SqLite support is planned)
-  type: "H2"
+  # Может быть H2 (поддержка SqLite планируется)
+  type: H2
 
 hooks:
-  # Supported stacker plugins: WildStacker, RoseStacker, none
-  stacker: "none"
-  # Supported economy providers: Vault, PlayerPoints, custom
-  economy: "Vault"
-  # Supported prices providers: ShopGUIPlus, Essentials, EconomyShopGUI, CMI, custom
-  prices: "ShopGUIPlus"
+  # Поддерживаемые плагины стакеров: WildStacker, RoseStacker, none
+  stacker: none
+  # Поддерживаемые провайдеры экономики: Vault, PlayerPoints, custom
+  economy: Vault
+  # Поддерживаемые провайдеры цен: ShopGUIPlus, Essentials, EconomyShopGUI, CMI, custom
+  prices: EconomyShopGUI
 
 charge:
   enabled: false
-  amount: 1800 # in seconds
-  max-charge: 1440 # in minutes
+  amount: 1800 # в секундах
+  max-charge: 1440 # в минутах
   price: 10000
-  minimum-charge: 30 # in seconds
+  minimum-charge: 30 # в секундах
   items:
-    1:
+    '1':
       type: coal
-      name: "<red>Fuel"
-      charge: 1000 # In seconds
+      name: <red>Топливо
+      charge: 1000 # В секундах
 
-# 1 - HH:MM:SS, for example 01:25:35
-# 2 - short format, for example 20m
-# 3 - text format, for example 01h 25m 35s
+# 1 - ЧЧ:ММ:СС, например 01:25:35
+# 2 - короткий формат, например 20м
+# 3 - текстовый формат, например 01ч 25м 35с
 timer-format: 1
 
 gui:
   size: 27
   items:
     filler:
-      type: "black_stained_glass_pane"
-      name: ""
+      type: black_stained_glass_pane
+      name: ''
     rotate:
-      type: "ender_eye"
-      name: "<#33FF33><b>Rotate"
+      type: ender_eye
+      name: <#33FF33><b>Повернуть
       lore:
-        - ""
-        - " <gray>- <white>Current: <#33FF33><direction>"
-        - ""
-        - "<#33FF33><b>(!)</b> Click here to rotate your minion!"
+      - ''
+      - ' <gray>- <white>Сейчас: <#33FF33><direction>'
+      - ''
+      - <#33FF33><b>(!)</b> Нажмите здесь, чтобы повернуть миньона!
       slot: 10
     link:
-      type: "chest"
-      name: "<#FFCC00><b>Link to container"
+      type: chest
+      name: <#FFCC00><b>Привязать к контейнеру
       lore:
-        - ""
-        - " <gray>- <white>Status: <#FFCC00><linked>"
-        - ""
-        - "<#FFCC00><b>(!)</b> Click here to link your minion to a container!"
+      - ''
+      - ' <gray>- <white>Статус: <#FFCC00><linked>'
+      - ''
+      - <#FFCC00><b>(!)</b> Нажмите здесь, чтобы привязать миньона к контейнеру!
       slot: 11
     item:
-      type: "air"
+      type: air
       slot: 13
     charge:
-      type: "lava_bucket"
-      name: "<#FB8E08><b>Charge"
+      type: lava_bucket
+      name: <#FB8E08><b>Зарядить
       lore:
-        - ""
-        - " <gray>- <white>Current charge: <#FFCC00><charge>"
-        - ""
-        - "<#FB8E08><b>(!)</b> Click here to charge your minion for <white>30 minutes</white>!"
+      - ''
+      - ' <gray>- <white>Текущий заряд: <#FFCC00><charge>'
+      - ''
+      - <#FB8E08><b>(!)</b> Нажмите здесь, чтобы зарядить миньона на <white>30 минут</white>!
       slot: 9
 
-    # These settings are minion-specific, you can edit them in each minion's file!
+    # Эти настройки специфичны для каждого миньона, вы можете редактировать их в файле каждого миньона!
     upgrade:
       slot: 15
+    bonus-loot-upgrade:
+      slot: 14
     statistics:
       slot: 16
-# Only change this, if you are asked to! This will make your performance worse, and will spam messages in your console!
-# Requires restart!
+# Изменяйте это, только если вас попросили! Это ухудшит производительность и будет спамить сообщениями в консоль!
+# Требуется перезапуск!
 debug: false
 
-# Do not change!
-config-version: 10
+# Не изменяйте!
+config-version: 11

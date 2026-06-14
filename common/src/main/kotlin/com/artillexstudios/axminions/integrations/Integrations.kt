@@ -9,6 +9,7 @@ import com.artillexstudios.axminions.api.integrations.Integrations
 import com.artillexstudios.axminions.api.integrations.types.*
 import com.artillexstudios.axminions.integrations.economy.PlayerPointsIntegration
 import com.artillexstudios.axminions.integrations.economy.VaultIntegration
+import com.artillexstudios.axminions.integrations.island.UltimateSkyBlockIntegration
 import com.artillexstudios.axminions.integrations.placeholder.PlaceholderAPIIntegration
 import com.artillexstudios.axminions.integrations.prices.CMIIntegration
 import com.artillexstudios.axminions.integrations.prices.EconomyShopGUIIntegration
@@ -37,6 +38,7 @@ class Integrations : Integrations {
     private var islandIntegration: IslandIntegration? = null
     private val protectionIntegrations = com.artillexstudios.axminions.integrations.protection.ProtectionIntegrations()
     internal var kGeneratorsIntegration = false
+    internal var ultimateGeneratorsIntegration = false
     internal var itemsAdderIntegration = false
 
     override fun getStackerIntegration(): StackerIntegration {
@@ -185,6 +187,12 @@ class Integrations : Integrations {
                 .sendMessage(StringUtils.formatToString("<#33FF33>[AxMinions] Hooked into IridiumSkyBlock!"))
         }
 
+        if (Bukkit.getPluginManager().getPlugin("UltimateSkyBlock") != null) {
+            register(UltimateSkyBlockIntegration())
+            Bukkit.getConsoleSender()
+                .sendMessage(StringUtils.formatToString("<#33FF33>[AxMinions] Hooked into UltimateSkyBlock!"))
+        }
+
         if (Bukkit.getPluginManager().getPlugin("KingdomsX") != null) {
             register(KingdomsXIntegration())
             Bukkit.getConsoleSender()
@@ -195,6 +203,12 @@ class Integrations : Integrations {
             kGeneratorsIntegration = true
             Bukkit.getConsoleSender()
                 .sendMessage(StringUtils.formatToString("<#33FF33>[AxMinions] Hooked into KGenerators!"))
+        }
+
+        if (Bukkit.getPluginManager().getPlugin("UltimateGenerators") != null) {
+            ultimateGeneratorsIntegration = true
+            Bukkit.getConsoleSender()
+                .sendMessage(StringUtils.formatToString("<#33FF33>[AxMinions] Hooked into UltimateGenerators!"))
         }
 
         if (Bukkit.getPluginManager().getPlugin("ItemsAdder") != null) {

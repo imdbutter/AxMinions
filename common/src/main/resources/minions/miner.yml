@@ -1,161 +1,402 @@
-name: "<#00AAFF>Miner <white>Minion"
+name: <#00AAFF>Шахтёр <white>Миньон
 
 entity:
-  name: "<level_color>[<level>] <#00AAFF>Miner <white>Minion <gray>[<owner>]"
+  name: <level_color>[<level>] <#00AAFF>Шахтёр <white>Миньон <gray>[<owner>]
 
 tool:
   material:
-    - "WOODEN_PICKAXE"
-    - "STONE_PICKAXE"
-    - "GOLDEN_PICKAXE"
-    - "IRON_PICKAXE"
-    - "DIAMOND_PICKAXE"
-    - "NETHERITE_PICKAXE"
+  - WOODEN_PICKAXE
+  - STONE_PICKAXE
+  - GOLDEN_PICKAXE
+  - IRON_PICKAXE
+  - DIAMOND_PICKAXE
+  - NETHERITE_PICKAXE
 
-# Can be: sphere, line, face, asphere
-# If set to sphere: checks blocks in a sphere with the range of the minion as radius (Most resource intensive, the larger the radius, the worse)
-# If set to line: checks blocks in all 4 directions from the minion in the range of the minion (Best performance to blocks broken ratio)
-# If set to face: checks blocks only in the facing of the minion (Least resource intensive)
-# If set to asphere: checks blocks in a sphere with the range of the minion as the radius, around the minion
-# Only switch to asphere mode, if you know what you're doing,
-# as it may cause some issues due to states being concurrently modified!
-mode: line
+# Может быть: sphere, line, face, asphere
+# Если установлено sphere: проверяет блоки в сфере с радиусом, равным радиусу миньона (наиболее ресурсоёмко, чем больше радиус, тем хуже)
+# Если установлено line: проверяет блоки во всех 4 направлениях от миньона в пределах радиуса миньона (лучшее соотношение производительности к сломанным блокам)
+# Если установлено face: проверяет блоки только по направлению взгляда миньона (наименее ресурсоёмко)
+# Если установлено asphere: проверяет блоки в сфере с радиусом миньона вокруг миньона
+# Переключайтесь на режим asphere, только если знаете, что делаете,
+# так как это может вызвать некоторые проблемы из-за одновременного изменения состояний!
+mode: face
 
-# Can be generator or whitelist
-# with generator mode the minion only mines blocks that are from a stone generator (water & lava on the sides of the block)
-# with whitelist mode, it will break all blocks that match the whitelist
-break: generator
+# Может быть generator или whitelist
+# В режиме generator миньон добывает только блоки из каменного генератора (вода и лава по бокам блока)
+# В режиме whitelist он будет ломать все блоки, которые соответствуют вайтлисту
+break: whitelist
 
 whitelist:
-  - "stone"
-  - "cobblestone"
-  - "iron_ore"
-  - "gold_ore"
-  - "redstone_ore"
+- stone
+- cobblestone
+- iron_ore
+- gold_ore
+- redstone_ore
+- granite
+- diorite
+- andesite
+- deepslate
+- cobbled_deepslate
+- tuff
+- calcite
+- dripstone_block
+- pointed_dripstone
+- mossy_cobblestone
+- smooth_basalt
+- obsidian
+- crying_obsidian
+- glowstone
+- netherrack
+- crimson_nylium
+- warped_nylium
+- blackstone
+- basalt
+- magma_block
+- nether_quartz_ore
+- nether_gold_ore
+- ancient_debris
+- end_stone
+- coal_ore
+- deepslate_coal_ore
+- copper_ore
+- deepslate_copper_ore
+- diamond_ore
+- deepslate_diamond_ore
+- emerald_ore
+- deepslate_emerald_ore
+- iron_block
+- gold_block
+- diamond_block
+- emerald_block
+- netherite_block
+- raw_iron_block
+- raw_gold_block
+- raw_copper_block
+- lapis_ore
+- deepslate_lapis_ore
+- lapis_block
+- coal_block
+- copper_block
+- amethyst_block
+- budding_amethyst
+- sand
+- red_sand
+- gravel
+- sandstone
+- red_sandstone
+- clay
+- dirt
+- coarse_dirt
+- rooted_dirt
+- grass_block
+- podzol
+- mycelium
+- mud
+- packed_mud
+- mud_bricks
+- mangrove_roots
+- muddy_mangrove_roots
+- soul_sand
+- soul_soil
+- ice
+- packed_ice
+- blue_ice
+- snow_block
+- terracotta
+- white_terracotta
+- orange_terracotta
+- magenta_terracotta
+- light_blue_terracotta
+- yellow_terracotta
+- lime_terracotta
+- pink_terracotta
+- gray_terracotta
+- light_gray_terracotta
+- cyan_terracotta
+- purple_terracotta
+- blue_terracotta
+- brown_terracotta
+- green_terracotta
+- red_terracotta
+- black_terracotta
+- prismarine
+- prismarine_bricks
+- dark_prismarine
+- sea_lantern
+- wet_sponge
+- sponge
+- brick
+- nether_bricks
+- red_nether_bricks
+- cracked_nether_bricks
+- chiseled_nether_bricks
+- quartz_block
+- smooth_quartz
+- quartz_bricks
+- quartz_pillar
+- chiseled_quartz_block
+- bone_block
+- bookshelf
+- target
+- dried_kelp_block
+- hay_block
+- amethyst_cluster
+- small_amethyst_bud
+- medium_amethyst_bud
+- large_amethyst_bud
+- calcite
+- smooth_stone
+- stone_bricks
+- mossy_stone_bricks
+- cracked_stone_bricks
+- chiseled_stone_bricks
+- deepslate_bricks
+- cracked_deepslate_bricks
+- deepslate_tiles
+- cracked_deepslate_tiles
+- chiseled_deepslate
+- polished_deepslate
+- polished_granite
+- polished_diorite
+- polished_andesite
+- polished_blackstone
+- chiseled_polished_blackstone
+- polished_blackstone_bricks
+- cracked_polished_blackstone_bricks
+- gilded_blackstone
+- purpur_block
+- purpur_pillar
+- end_stone_bricks
+- nether_wart_block
+- warped_wart_block
+- shroomlight
+- sculk
+- sculk_vein
+- sculk_catalyst
+- sculk_shrieker
+- sculk_sensor
+- calcite
+- raw_iron_block
+- raw_copper_block
+- raw_gold_block
 
 item:
-  type: "player_head"
-  texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzk2MjdiZTYyY2VkNzE0MTEzOWQzZjE1NTc5MGE1ZDQzNTZlYjdiOWVlOTVlNTA0YjMzMjI5NzRjYmM1MTVlYSJ9fX0="
-  name: "<#00AAFF>Miner <white>Minion"
+  type: player_head
+  texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzk2MjdiZTYyY2VkNzE0MTEzOWQzZjE1NTc5MGE1ZDQzNTZlYjdiOWVlOTVlNTA0YjMzMjI5NzRjYmM1MTVlYSJ9fX0=
+  name: <#00AAFF>Шахтёр <white>Миньон
   lore:
-    - ""
-    - " <gray>- <white>Collects all items around itself."
-    - ""
-    - "<#00AAFF>Statistics"
-    - " <#00AAFF>❙ <white>Level: <#FFEEAA><level>"
-    - " <#00AAFF>❙ <white>Blocks broken: <#FFEEAA><actions>"
-    - ""
-    - "<#00AAFF><b>(!)</b> Place the minion and give it a pickaxe!"
+  - ''
+  - ' <gray>- <white>Собирает все предметы вокруг себя.'
+  - ' <gray>- <white>Ставьте миньона на блок выше Генератора, иначе потеряете сам генератор.'
+  - ''
+  - <#00AAFF>Статистика
+  - ' <#00AAFF>❙ <white>Уровень: <#FFEEAA><level>'
+  - ' <#00AAFF>❙ <white>Сломано блоков: <#FFEEAA><actions>'
+  - ''
+  - <#00AAFF><b>(!)</b> Разместите миньона и дайте ему кирку!
 
 gui:
   upgrade:
-    type: "gold_ingot"
-    name: "<#00CCFF><b>Upgrade minion"
+    type: gold_ingot
+    name: <#00CCFF><b>Улучшить миньона
     lore:
-      - ""
-      - " <gray>- <white>Level: <green><level> » <dark_green><next_level>"
-      - " <gray>- <white>Range: <green><range> » <dark_green><next_range>"
-      - " <gray>- <white>Speed: <green><speed> » <dark_green><next_speed>"
-      - ""
-      - "<#00CCFF>Requirements:"
-      - " <gray>- <white>Money: <#33FF33><price>$"
-      - " <gray>- <white>Blocks broken: <#33FF33><required_actions>"
-      - ""
-      - "<#00CCFF><b>(!)</b> Click here to upgrade your minion!"
+    - ''
+    - ' <gray>- <white>Уровень: <green><level> » <dark_green><next_level>'
+    - ' <gray>- <white>Радиус: <green><range> » <dark_green><next_range>'
+    - ' <gray>- <white>Скорость: <green><speed> » <dark_green><next_speed>'
+    - ''
+    - '<#00CCFF>Требования:'
+    - ' <gray>- <white>Деньги: <#33FF33><price>$'
+    - ' <gray>- <white>Сломано блоков: <#33FF33><required_actions>'
+    - ''
+    - <#00CCFF><b>(!)</b> Нажмите здесь, чтобы улучшить миньона!
+  bonus-loot-upgrade:
+    type: emerald
+    name: <#33FF99><b>Улучшить добычу
+    lore:
+    - ''
+    - ' <gray>- <white>Уровень добычи: <green><bonus_loot_level> » <dark_green><next_bonus_loot_level>'
+    - ' <gray>- <white>Шанс бонуса: <green><upgrade_bonus_loot_chance>% » <dark_green><next_upgrade_bonus_loot_chance>%'
+    - ' <gray>- <white>Множитель: <green>x<upgrade_bonus_loot_multiplier> » <dark_green>x<next_upgrade_bonus_loot_multiplier>'
+    - ''
+    - '<#33FF99>Требования:'
+    - ' <gray>- <white>Деньги: <#33FF33><bonus_loot_price>$'
+    - ' <gray>- <white>Действия: <#33FF33><bonus_loot_required_actions>'
+    - ''
+    - <#33FF99><b>(!)</b> Нажмите здесь, чтобы улучшить бонусную добычу!
   statistics:
-    type: "paper"
-    name: "<#00AAFF><b>Statistics"
+    type: paper
+    name: <#00AAFF><b>Статистика
     lore:
-      - ""
-      - " <gray>- <white>Blocks broken: <#00AAFF><actions>"
-      - ""
+    - ''
+    - ' <gray>- <white>Сломано блоков: <#00AAFF><actions>'
+    - ''
 
 upgrades:
-  1:
-    range: 3
+  '1':
+    range: 1
     speed: 200
+    bonus-loot-chance: 0
+    bonus-loot-multiplier: 2
     items:
       helmet:
-        type: "player_head"
-        texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzk2MjdiZTYyY2VkNzE0MTEzOWQzZjE1NTc5MGE1ZDQzNTZlYjdiOWVlOTVlNTA0YjMzMjI5NzRjYmM1MTVlYSJ9fX0="
+        type: player_head
+        texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzk2MjdiZTYyY2VkNzE0MTEzOWQzZjE1NTc5MGE1ZDQzNTZlYjdiOWVlOTVlNTA0YjMzMjI5NzRjYmM1MTVlYSJ9fX0=
       chestplate:
-        type: "leather_chestplate"
-        color: "200, 200, 200"
+        type: leather_chestplate
+        color: 200, 200, 200
         glow: false
       leggings:
-        type: "leather_leggings"
-        color: "200, 200, 200"
+        type: leather_leggings
+        color: 200, 200, 200
         glow: false
       boots:
-        type: "leather_boots"
-        color: "200, 200, 200"
+        type: leather_boots
+        color: 200, 200, 200
         glow: false
-  2:
-    range: 3
+  '2':
+    range: 1
     speed: 185
+    bonus-loot-chance: 2
+    bonus-loot-multiplier: 2
     requirements:
       money: 1000
       actions: 100
-  3:
-    range: 3
+  '3':
+    range: 1
     speed: 175
+    bonus-loot-chance: 4
+    bonus-loot-multiplier: 2
     requirements:
       money: 3000
       actions: 300
-  4:
-    range: 4
+  '4':
+    range: 1
     speed: 160
+    bonus-loot-chance: 6
+    bonus-loot-multiplier: 2
     requirements:
       money: 10000
       actions: 1000
-  5:
-    range: 4
+  '5':
+    range: 1
     speed: 150
+    bonus-loot-chance: 8
+    bonus-loot-multiplier: 2
     requirements:
       money: 20000
       actions: 3000
-  6:
-    range: 5
+  '6':
+    range: 1
     speed: 130
+    bonus-loot-chance: 10
+    bonus-loot-multiplier: 2
     requirements:
       money: 50000
       actions: 6000
-  7:
-    range: 5
+  '7':
+    range: 1
     speed: 115
+    bonus-loot-chance: 12
+    bonus-loot-multiplier: 2
     requirements:
       money: 150000
       actions: 10000
-  8:
-    range: 6
+  '8':
+    range: 1
     speed: 100
+    bonus-loot-chance: 15
+    bonus-loot-multiplier: 2
     requirements:
       money: 500000
       actions: 17500
-  9:
-    range: 6
+  '9':
+    range: 1
     speed: 85
+    bonus-loot-chance: 18
+    bonus-loot-multiplier: 2
     requirements:
       money: 1000000
       actions: 25000
-  10:
-    range: 7
+  '10':
+    range: 1
     speed: 60
+    bonus-loot-chance: 25
+    bonus-loot-multiplier: 2
     requirements:
-      money: 5000000
+      money: 2000000
       actions: 50000
     items:
       chestplate:
         type: LEATHER_CHESTPLATE
-        color: "150, 150, 150"
+        color: 150, 150, 150
         glow: true
       leggings:
         type: LEATHER_LEGGINGS
-        color: "150, 150, 150"
+        color: 150, 150, 150
         glow: true
       boots:
         type: LEATHER_BOOTS
-        color: "150, 150, 150"
+        color: 150, 150, 150
         glow: true
 
-config-version: 1
+bonus-loot-upgrades:
+  '1':
+    bonus-loot-chance: 0
+    bonus-loot-multiplier: 2
+  '2':
+    bonus-loot-chance: 2
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 1000
+      actions: 0
+  '3':
+    bonus-loot-chance: 4
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 3000
+      actions: 0
+  '4':
+    bonus-loot-chance: 6
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 10000
+      actions: 0
+  '5':
+    bonus-loot-chance: 8
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 20000
+      actions: 0
+  '6':
+    bonus-loot-chance: 10
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 50000
+      actions: 0
+  '7':
+    bonus-loot-chance: 12
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 150000
+      actions: 0
+  '8':
+    bonus-loot-chance: 15
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 500000
+      actions: 0
+  '9':
+    bonus-loot-chance: 18
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 1000000
+      actions: 0
+  '10':
+    bonus-loot-chance: 25
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 2000000
+      actions: 0
+
+config-version: '3'

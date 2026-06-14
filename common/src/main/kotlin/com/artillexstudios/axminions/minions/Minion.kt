@@ -65,7 +65,8 @@ class Minion(
     private var storage: Double,
     private val locationID: Int,
     private var chestLocationId: Int,
-    private var charge: Long
+    private var charge: Long,
+    private var bonusLootLevel: Int = 1
 ) : Minion {
     companion object {
         private val equipmentSlots: Array<EquipmentSlot> = arrayOf(
@@ -265,7 +266,9 @@ class Minion(
         AxMinionsAPI.INSTANCE.getConfig().getConfig().getSection("gui.items").getRoutesAsStrings(false).forEach {
             if (it.equals("filler")) return@forEach
             val item: ItemStack?
-            if (it.equals("upgrade", true) || it.equals("statistics", true)) {
+            val hasMinionGuiSection = type.getConfig().backingDocument.isSection("gui.$it")
+            if (it.equals("bonus-loot-upgrade", true) && !type.hasBonusLootUpgrades()) return@forEach
+            if (hasMinionGuiSection) {
                 val level = Placeholder.parsed("level", level.toString())
                 val nextLevel = Placeholder.parsed(
                     "next_level", when (type.hasReachedMaxLevel(this)) {
@@ -345,6 +348,57 @@ class Minion(
                         this.level + 1
                     ).toString()
                 )
+                val bonusLootChance = Placeholder.parsed("bonus_loot_chance", type.getDouble("bonus-loot-chance", this.level).toString())
+                val nextBonusLootChance = Placeholder.parsed(
+                    "next_bonus_loot_chance",
+                    if (type.hasReachedMaxLevel(this)) Messages.UPGRADES_MAX_LEVEL_REACHED() else type.getDouble(
+                        "bonus-loot-chance",
+                        this.level + 1
+                    ).toString()
+                )
+                val bonusLootMultiplier = Placeholder.parsed("bonus_loot_multiplier", type.getDouble("bonus-loot-multiplier", this.level).toString())
+                val nextBonusLootMultiplier = Placeholder.parsed(
+                    "next_bonus_loot_multiplier",
+                    if (type.hasReachedMaxLevel(this)) Messages.UPGRADES_MAX_LEVEL_REACHED() else type.getDouble(
+                        "bonus-loot-multiplier",
+                        this.level + 1
+                    ).toString()
+                )
+                val bonusLootUpgradeLevel = Placeholder.parsed("bonus_loot_level", bonusLootLevel.toString())
+                val nextBonusLootUpgradeLevel = Placeholder.parsed(
+                    "next_bonus_loot_level",
+                    if (type.hasReachedMaxBonusLootLevel(this)) Messages.UPGRADES_MAX_LEVEL_REACHED() else (bonusLootLevel + 1).toString()
+                )
+                val upgradeBonusLootChance = Placeholder.parsed("upgrade_bonus_loot_chance", type.getBonusLootDouble("bonus-loot-chance", bonusLootLevel).toString())
+                val nextUpgradeBonusLootChance = Placeholder.parsed(
+                    "next_upgrade_bonus_loot_chance",
+                    if (type.hasReachedMaxBonusLootLevel(this)) Messages.UPGRADES_MAX_LEVEL_REACHED() else type.getBonusLootDouble(
+                        "bonus-loot-chance",
+                        bonusLootLevel + 1
+                    ).toString()
+                )
+                val upgradeBonusLootMultiplier = Placeholder.parsed("upgrade_bonus_loot_multiplier", type.getBonusLootDouble("bonus-loot-multiplier", bonusLootLevel).toString())
+                val nextUpgradeBonusLootMultiplier = Placeholder.parsed(
+                    "next_upgrade_bonus_loot_multiplier",
+                    if (type.hasReachedMaxBonusLootLevel(this)) Messages.UPGRADES_MAX_LEVEL_REACHED() else type.getBonusLootDouble(
+                        "bonus-loot-multiplier",
+                        bonusLootLevel + 1
+                    ).toString()
+                )
+                val bonusLootPrice = Placeholder.parsed(
+                    "bonus_loot_price",
+                    if (type.hasReachedMaxBonusLootLevel(this)) Messages.UPGRADES_MAX_LEVEL_REACHED() else type.getBonusLootDouble(
+                        "requirements.money",
+                        bonusLootLevel + 1
+                    ).toString()
+                )
+                val bonusLootRequiredActions = Placeholder.parsed(
+                    "bonus_loot_required_actions",
+                    if (type.hasReachedMaxBonusLootLevel(this)) Messages.UPGRADES_MAX_LEVEL_REACHED() else type.getBonusLootDouble(
+                        "requirements.actions",
+                        bonusLootLevel + 1
+                    ).toString()
+                )
 
                 item = ItemBuilder.create(
                     type.getConfig().getSection("gui.$it"),
@@ -366,7 +420,19 @@ class Minion(
                     chanceKillStackedAmount,
                     nextChanceKillStackedAmount,
                     stackedAmount,
-                    nextStackedAmount
+                    nextStackedAmount,
+                    bonusLootChance,
+                    nextBonusLootChance,
+                    bonusLootMultiplier,
+                    nextBonusLootMultiplier,
+                    bonusLootUpgradeLevel,
+                    nextBonusLootUpgradeLevel,
+                    upgradeBonusLootChance,
+                    nextUpgradeBonusLootChance,
+                    upgradeBonusLootMultiplier,
+                    nextUpgradeBonusLootMultiplier,
+                    bonusLootPrice,
+                    bonusLootRequiredActions
                 ).get()
 
                 val meta = item.itemMeta!!
@@ -439,7 +505,7 @@ class Minion(
     }
 
     override fun getAsItem(): ItemStack {
-        return type.getItem(level, actions, charge)
+        return type.getItem(level, actions, charge, bonusLootLevel)
     }
 
     override fun getLevel(): Int {
@@ -525,6 +591,19 @@ class Minion(
                 Placeholder.parsed("level_color", Messages.LEVEL_COLOR(level))
             )
         )
+
+        AxMinionsPlugin.dataQueue.submit {
+            AxMinionsPlugin.dataHandler.saveMinion(this)
+        }
+    }
+
+    override fun getBonusLootLevel(): Int {
+        return this.bonusLootLevel
+    }
+
+    override fun setBonusLootLevel(level: Int) {
+        this.bonusLootLevel = level
+        updateInventories()
 
         AxMinionsPlugin.dataQueue.submit {
             AxMinionsPlugin.dataHandler.saveMinion(this)

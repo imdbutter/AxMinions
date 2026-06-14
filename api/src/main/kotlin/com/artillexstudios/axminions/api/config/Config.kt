@@ -1,23 +1,23 @@
 package com.artillexstudios.axminions.api.config
 
-import com.artillexstudios.axapi.config.Config
+import com.artillexstudios.axapi.config.Config as AxConfig
 import com.artillexstudios.axapi.libs.boostedyaml.block.implementation.Section
-import com.artillexstudios.axapi.libs.boostedyaml.dvs.versioning.BasicVersioning
 import com.artillexstudios.axapi.libs.boostedyaml.settings.dumper.DumperSettings
 import com.artillexstudios.axapi.libs.boostedyaml.settings.general.GeneralSettings
 import com.artillexstudios.axapi.libs.boostedyaml.settings.loader.LoaderSettings
 import com.artillexstudios.axapi.libs.boostedyaml.settings.updater.UpdaterSettings
 import com.artillexstudios.axminions.api.AxMinionsAPI
+import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InputStream
 import java.lang.ClassCastException
 import java.util.Locale
 
-class Config(file: File, stream: InputStream) {
+class Config(private val file: File, stream: InputStream) {
     companion object {
         private var debug: Boolean? = null
         @JvmStatic
-        fun AUTO_SAVE_MINUTES() = AxMinionsAPI.INSTANCE.getConfig().get("autosave-minutes", 3L)
+        fun AUTO_SAVE_MINUTES() = AxMinionsAPI.INSTANCE.getConfig().get("auto-save-minutes", 3L)
         @JvmStatic
         fun MAX_LINKING_DISTANCE() = AxMinionsAPI.INSTANCE.getConfig().get("max-linking-distance", 30)
         @JvmStatic
@@ -80,14 +80,15 @@ class Config(file: File, stream: InputStream) {
         }
     }
 
-    private val config = Config(
-        file,
-        stream,
-        GeneralSettings.builder().setUseDefaults(false).build(),
-        LoaderSettings.builder().setAutoUpdate(true).build(),
-        DumperSettings.DEFAULT,
-        UpdaterSettings.builder().setVersioning(BasicVersioning("config-version")).build()
-    )
+    private val defaults = stream.use { it.readBytes() }
+    private var config = loadConfig()
+
+    init {
+        if (!isLoaded(config)) {
+            overwriteWithDefaults()
+            config = loadConfig()
+        }
+    }
 
     fun <T> get(route: String?, default: T): T {
         try {
@@ -116,11 +117,46 @@ class Config(file: File, stream: InputStream) {
         return this.config.get(route)
     }
 
-    fun getConfig(): Config {
+    fun getConfig(): AxConfig {
         return config
     }
 
     fun reload() {
-        config.reload()
+        runCatching { config.reload() }
+
+        if (isLoaded(config)) {
+            return
+        }
+
+        overwriteWithDefaults()
+        config = loadConfig()
+    }
+
+    private fun loadConfig(): AxConfig {
+        file.parentFile?.mkdirs()
+        writeDefaultsIfMissing()
+        return AxConfig(
+            file,
+            ByteArrayInputStream(defaults),
+            GeneralSettings.builder().setUseDefaults(false).build(),
+            LoaderSettings.DEFAULT,
+            DumperSettings.DEFAULT,
+            UpdaterSettings.DEFAULT
+        )
+    }
+
+    private fun writeDefaultsIfMissing() {
+        if (file.exists()) return
+
+        file.writeBytes(defaults)
+    }
+
+    private fun isLoaded(config: AxConfig): Boolean {
+        return runCatching { config.backingDocument != null }.getOrDefault(false)
+    }
+
+    private fun overwriteWithDefaults() {
+        file.parentFile?.mkdirs()
+        file.writeBytes(defaults)
     }
 }

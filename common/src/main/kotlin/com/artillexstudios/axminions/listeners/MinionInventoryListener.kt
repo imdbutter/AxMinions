@@ -177,6 +177,45 @@ class MinionInventoryListener : Listener {
                 minion.setLevel(minion.getLevel() + 1)
             }
 
+            "bonus-loot-upgrade" -> {
+                if (!minion.getType().hasBonusLootUpgrades()) {
+                    return
+                }
+
+                if (minion.getType().hasReachedMaxBonusLootLevel(minion)) {
+                    return
+                }
+
+                val nextLevel = minion.getBonusLootLevel() + 1
+                val money = minion.getType().getBonusLootDouble("requirements.money", nextLevel)
+                val actions = minion.getType().getBonusLootDouble("requirements.actions", nextLevel)
+
+                if (minion.getActionAmount() < actions) {
+                    sendFail(player)
+                    return
+                }
+
+                AxMinionsPlugin.integrations.getEconomyIntegration()?.let {
+                    if (it.getBalance(player) < money) {
+                        sendFail(player)
+                        return
+                    }
+
+                    it.takeBalance(player, money)
+                }
+
+                if (Config.UPGRADE_SOUND().isNotBlank()) {
+                    player.playSound(
+                        player,
+                        Sound.valueOf(Config.UPGRADE_SOUND().uppercase(Locale.ENGLISH)),
+                        1.0f,
+                        1.0f
+                    )
+                }
+
+                minion.setBonusLootLevel(nextLevel)
+            }
+
             "statistics" -> {
                 val stored = minion.getStorage()
 

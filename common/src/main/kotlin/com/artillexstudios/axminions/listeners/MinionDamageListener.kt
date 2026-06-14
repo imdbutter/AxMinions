@@ -9,6 +9,7 @@ import com.artillexstudios.axminions.api.warnings.Warnings
 import com.artillexstudios.axminions.nms.NMSHandler
 import dev.rosewood.rosestacker.api.RoseStackerAPI
 import com.artillexstudios.axminions.integrations.stacker.RoseStackerIntegration
+import com.artillexstudios.axminions.minions.utils.MinionLoot
 import org.bukkit.Bukkit
 import java.util.concurrent.ThreadLocalRandom
 import java.util.Random
@@ -58,10 +59,12 @@ class MinionDamageListener : Listener {
                 val amount = AxMinionsPlugin.integrations.getStackerIntegration().getStackSize(item)
                 val stack = item.itemStack
                 stack.amount = amount.toInt()
+                val extraDrops = MinionLoot.rollExtraDrops(event.minion, listOf(stack))
 
                 val map = event.minion.addWithRemaining(stack) ?: return@fastFor
                 if (map.isEmpty() || stack.amount <= 0) {
                     item.remove()
+                    event.minion.addToContainerOrDrop(extraDrops)
                 } else {
                     AxMinionsAPI.INSTANCE.getIntegrations().getStackerIntegration().setStackSize(item, stack.amount)
                 }

@@ -20,6 +20,7 @@ repositories {
 dependencies {
     implementation project(path: ":api")
     implementation project(path: ":common")
+    implementation files("${rootProject.projectDir}/libs/axapi-2.1.0-DEV-9-all.jar")
     implementation project(path: ":nms:v1_20_R1", configuration: "reobf")
     implementation project(path: ":nms:v1_20_R2", configuration: "reobf")
     implementation project(path: ":nms:v1_20_R3", configuration: "reobf")
@@ -31,11 +32,6 @@ dependencies {
     implementation project(path: ":nms:v1_21_R5", configuration: "reobf")
     implementation project(path: ":nms:v1_21_R6", configuration: "reobf")
     implementation project(path: ":nms:v1_21_R7", configuration: "reobf")
-    implementation(project(path: ":nms:v26_1")) {
-        attributes {
-            attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 25)
-        }
-    }
 }
 
 allprojects {
@@ -131,7 +127,7 @@ allprojects {
 
     dependencies {
         compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:2.1.10'
-        implementation("com.artillexstudios.axapi:axapi:2.1.0-DEV-9:all")
+        compileOnly files("${rootProject.projectDir}/libs/axapi-2.1.0-DEV-9-all.jar")
     }
 
     if (project.name != "api") {
@@ -143,6 +139,7 @@ allprojects {
 
 
 shadowJar {
+    exclude("com/artillexstudios/axapi/nms/v26_1/**")
     relocate("com.artillexstudios.axapi", "com.artillexstudios.axminions.libs.axapi")
     relocate("org.h2", "com.artillexstudios.axminions.libs.h2")
     relocate("org.jetbrains.kotlin", "com.artillexstudios.axminions.libs.kotlin")

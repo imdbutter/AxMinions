@@ -22,7 +22,7 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.DoubleChestInventory
 import org.bukkit.inventory.ItemStack
 
-class FarmerMinionType : MinionType("farmer", AxMinionsPlugin.INSTANCE.getResource("minions/farmer.yml")!!, true) {
+class FarmerMinionType : MinionType("farmer", AxMinionsPlugin.INSTANCE.getResource("minions/farmer.yml")!!) {
 
     override fun shouldRun(minion: Minion): Boolean {
         return MinionTicker.getTick() % minion.getNextAction() == 0L

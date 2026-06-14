@@ -16,4 +16,6 @@ object Keys {
     val PLACED = NamespacedKey(AxMinionsAPI.INSTANCE.getAxMinionsInstance(), "placed")
     @JvmField
     val CHARGE = NamespacedKey(AxMinionsAPI.INSTANCE.getAxMinionsInstance(), "charge")
+    @JvmField
+    val BONUS_LOOT_LEVEL = NamespacedKey(AxMinionsAPI.INSTANCE.getAxMinionsInstance(), "bonus_loot_level")
 }

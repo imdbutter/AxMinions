@@ -1,0 +1,250 @@
+name: <#FFAA33>Мясник <white>Миньон
+
+entity:
+  name: <level_color>[<level>] <#FFAA33>Мясник <white>Миньон <gray>[<owner>]
+
+tool:
+  material:
+  - WOODEN_SWORD
+  - STONE_SWORD
+  - GOLDEN_SWORD
+  - IRON_SWORD
+  - DIAMOND_SWORD
+  - NETHERITE_SWORD
+
+damage-tamed: false
+damage-renamed: false
+
+# NMS-животные всегда являются целью. Добавьте дополнительных мирных мобов сюда.
+target-types:
+- VILLAGER
+- WANDERING_TRADER
+- ALLAY
+- BAT
+- SQUID
+- GLOW_SQUID
+- AXOLOTL
+- DOLPHIN
+- TURTLE
+
+item:
+  type: player_head
+  texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTc1MzJlOTBjNTczYTM5NGM3ODAyYWE0MTU4MzA1ODAyYjU5ZTY3ZjJhMmI3ZTNmZDAzNjNhYTZlYTQyYjg0MSJ9fX0=
+  name: <#FFAA33>Мясник <white>Миньон
+  lore:
+  - ''
+  - ' <gray>- <white>Убивает мирных мобов вокруг себя.'
+  - ''
+  - <#FFAA33>Статистика
+  - ' <#FFAA33>* <white>Уровень: <#FFEEAA><level>'
+  - ' <#FFAA33>* <white>Убито мобов: <#FFEEAA><actions>'
+  - ''
+  - <#FFAA33><b>(!)</b> Поставьте миньона и дайте ему меч!
+
+gui:
+  upgrade:
+    type: gold_ingot
+    name: <#00CCFF><b>Улучшить миньона
+    lore:
+    - ''
+    - ' <gray>- <white>Уровень: <green><level> → <dark_green><next_level>'
+    - ' <gray>- <white>Радиус: <green><range> → <dark_green><next_range>'
+    - ' <gray>- <white>Скорость: <green><speed> → <dark_green><next_speed>'
+    - ''
+    - '<#00CCFF>Требования:'
+    - ' <gray>- <white>Деньги: <#33FF33><price>$'
+    - ' <gray>- <white>Убито мобов: <#33FF33><required_actions>'
+    - ''
+    - <#00CCFF><b>(!)</b> Нажмите сюда, чтобы улучшить миньона!
+  bonus-loot-upgrade:
+    type: emerald
+    name: <#33FF99><b>Улучшить добычу
+    lore:
+    - ''
+    - ' <gray>- <white>Уровень добычи: <green><bonus_loot_level> → <dark_green><next_bonus_loot_level>'
+    - ' <gray>- <white>Шанс бонуса: <green><upgrade_bonus_loot_chance>% → <dark_green><next_upgrade_bonus_loot_chance>%'
+    - ' <gray>- <white>Множитель: <green>x<upgrade_bonus_loot_multiplier> → <dark_green>x<next_upgrade_bonus_loot_multiplier>'
+    - ''
+    - '<#33FF99>Требования:'
+    - ' <gray>- <white>Деньги: <#33FF33><bonus_loot_price>$'
+    - ' <gray>- <white>Действия: <#33FF33><bonus_loot_required_actions>'
+    - ''
+    - <#33FF99><b>(!)</b> Нажмите сюда, чтобы улучшить бонусную добычу!
+  statistics:
+    type: paper
+    name: <#FFAA33><b>Статистика
+    lore:
+    - ''
+    - ' <gray>- <white>Убито мобов: <#FFAA33><actions>'
+    - ' <gray>- <white>Накоплено опыта: <#CC00FF><storage>'
+    - ''
+
+upgrades:
+  '1':
+    range: 3
+    speed: 200
+    storage: 200
+    bonus-loot-chance: 0
+    bonus-loot-multiplier: 2
+    items:
+      helmet:
+        type: player_head
+        texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTc1MzJlOTBjNTczYTM5NGM3ODAyYWE0MTU4MzA1ODAyYjU5ZTY3ZjJhMmI3ZTNmZDAzNjNhYTZlYTQyYjg0MSJ9fX0=
+      chestplate:
+        type: leather_chestplate
+        color: 255, 170, 40
+        glow: false
+      leggings:
+        type: leather_leggings
+        color: 255, 170, 40
+        glow: false
+      boots:
+        type: leather_boots
+        color: 255, 170, 40
+        glow: false
+  '2':
+    range: 4
+    speed: 190
+    bonus-loot-chance: 2
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 1000
+      actions: 100
+  '3':
+    range: 4
+    speed: 175
+    bonus-loot-chance: 4
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 3000
+      actions: 300
+  '4':
+    range: 5
+    speed: 160
+    bonus-loot-chance: 6
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 10000
+      actions: 1000
+  '5':
+    range: 5
+    speed: 150
+    bonus-loot-chance: 8
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 20000
+      actions: 3000
+  '6':
+    range: 6
+    speed: 130
+    bonus-loot-chance: 10
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 50000
+      actions: 6000
+  '7':
+    range: 6
+    speed: 115
+    bonus-loot-chance: 12
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 150000
+      actions: 10000
+  '8':
+    range: 7
+    speed: 100
+    bonus-loot-chance: 15
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 500000
+      actions: 17500
+  '9':
+    range: 8
+    speed: 85
+    bonus-loot-chance: 18
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 1000000
+      actions: 25000
+  '10':
+    range: 8
+    speed: 60
+    bonus-loot-chance: 25
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 5000000
+      actions: 50000
+    items:
+      chestplate:
+        type: LEATHER_CHESTPLATE
+        color: 220, 120, 20
+        glow: true
+      leggings:
+        type: LEATHER_LEGGINGS
+        color: 220, 120, 20
+        glow: true
+      boots:
+        type: LEATHER_BOOTS
+        color: 220, 120, 20
+        glow: true
+
+bonus-loot-upgrades:
+  '1':
+    bonus-loot-chance: 0
+    bonus-loot-multiplier: 2
+  '2':
+    bonus-loot-chance: 2
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 1000
+      actions: 0
+  '3':
+    bonus-loot-chance: 4
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 3000
+      actions: 0
+  '4':
+    bonus-loot-chance: 6
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 10000
+      actions: 0
+  '5':
+    bonus-loot-chance: 8
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 20000
+      actions: 0
+  '6':
+    bonus-loot-chance: 10
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 50000
+      actions: 0
+  '7':
+    bonus-loot-chance: 12
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 150000
+      actions: 0
+  '8':
+    bonus-loot-chance: 15
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 500000
+      actions: 0
+  '9':
+    bonus-loot-chance: 18
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 1000000
+      actions: 0
+  '10':
+    bonus-loot-chance: 25
+    bonus-loot-multiplier: 2
+    requirements:
+      money: 5000000
+      actions: 0
+
+config-version: 2

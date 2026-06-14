@@ -1,7 +1,6 @@
 package com.artillexstudios.axminions.api.config
 
 import com.artillexstudios.axapi.config.Config
-import com.artillexstudios.axapi.libs.boostedyaml.dvs.versioning.BasicVersioning
 import com.artillexstudios.axapi.libs.boostedyaml.settings.dumper.DumperSettings
 import com.artillexstudios.axapi.libs.boostedyaml.settings.general.GeneralSettings
 import com.artillexstudios.axapi.libs.boostedyaml.settings.loader.LoaderSettings
@@ -10,11 +9,12 @@ import com.artillexstudios.axapi.utils.RotationType
 import com.artillexstudios.axapi.utils.StringUtils
 import com.artillexstudios.axminions.api.AxMinionsAPI
 import com.artillexstudios.axminions.api.minions.Direction
+import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InputStream
 import java.util.Locale
 
-class Messages(file: File, stream: InputStream) {
+class Messages(private val file: File, stream: InputStream) {
     companion object {
         @JvmStatic
         fun PREFIX() = AxMinionsAPI.INSTANCE.getMessages().get<String>("prefix")
@@ -89,14 +89,15 @@ class Messages(file: File, stream: InputStream) {
         fun LOCATION_FORMAT() = AxMinionsAPI.INSTANCE.getMessages().get<String>("location-format")
     }
 
-    private val config = Config(
-        file,
-        stream,
-        GeneralSettings.builder().setUseDefaults(false).build(),
-        LoaderSettings.builder().setAutoUpdate(true).build(),
-        DumperSettings.DEFAULT,
-        UpdaterSettings.builder().setVersioning(BasicVersioning("config-version")).build()
-    )
+    private val defaults = stream.use { it.readBytes() }
+    private var config = loadConfig()
+
+    init {
+        if (!isLoaded(config)) {
+            overwriteWithDefaults()
+            config = loadConfig()
+        }
+    }
 
     fun <T> get(route: String?): T {
         return this.config.get(route)
@@ -111,6 +112,41 @@ class Messages(file: File, stream: InputStream) {
     }
 
     fun reload() {
-        config.reload()
+        runCatching { config.reload() }
+
+        if (isLoaded(config)) {
+            return
+        }
+
+        overwriteWithDefaults()
+        config = loadConfig()
+    }
+
+    private fun loadConfig(): Config {
+        file.parentFile?.mkdirs()
+        writeDefaultsIfMissing()
+        return Config(
+            file,
+            ByteArrayInputStream(defaults),
+            GeneralSettings.builder().setUseDefaults(false).build(),
+            LoaderSettings.DEFAULT,
+            DumperSettings.DEFAULT,
+            UpdaterSettings.DEFAULT
+        )
+    }
+
+    private fun writeDefaultsIfMissing() {
+        if (file.exists()) return
+
+        file.writeBytes(defaults)
+    }
+
+    private fun isLoaded(config: Config): Boolean {
+        return runCatching { config.backingDocument != null }.getOrDefault(false)
+    }
+
+    private fun overwriteWithDefaults() {
+        file.parentFile?.mkdirs()
+        file.writeBytes(defaults)
     }
 }

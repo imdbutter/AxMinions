@@ -76,6 +76,12 @@ class H2DataHandler : DataHandler {
         }
 
         dataSource.connection.use { connection ->
+            connection.prepareStatement("ALTER TABLE `axminions_minions` ADD COLUMN IF NOT EXISTS `bonus_loot_level` SMALLINT DEFAULT(1);").use {
+                it.executeUpdate()
+            }
+        }
+
+        dataSource.connection.use { connection ->
             connection.prepareStatement("ALTER TABLE `axminions_users` ADD COLUMN IF NOT EXISTS `island_slots` INT DEFAULT(0);").use {
                 it.executeUpdate()
             }
@@ -128,6 +134,7 @@ class H2DataHandler : DataHandler {
                         val actions = resultSet.getLong("actions")
                         val tool = resultSet.getString("tool")
                         val charge = resultSet.getLong("charge")
+                        val bonusLootLevel = resultSet.getInt("bonus_loot_level").coerceAtLeast(1)
 
                         val location = getLocation(locationId)
                         var chestLocation: Location? = null
@@ -153,7 +160,8 @@ class H2DataHandler : DataHandler {
                             storage,
                             locationId,
                             chestLocationId,
-                            charge
+                            charge,
+                            bonusLootLevel
                         )
                     }
                 }
@@ -282,7 +290,7 @@ class H2DataHandler : DataHandler {
         }
 
         dataSource.connection.use { connection ->
-            connection.prepareStatement("MERGE INTO `axminions_minions`(`location_id`, `chest_location_id`, `owner_id`, `type_id`, `direction`, `level`, `storage`, `actions`, `tool`, `charge`) KEY(`location_id`) VALUES(?,?,?,?,?,?,?,?,?,?)")
+            connection.prepareStatement("MERGE INTO `axminions_minions`(`location_id`, `chest_location_id`, `owner_id`, `type_id`, `direction`, `level`, `storage`, `actions`, `tool`, `charge`, `bonus_loot_level`) KEY(`location_id`) VALUES(?,?,?,?,?,?,?,?,?,?,?)")
                 .use { statement ->
                     statement.setInt(1, locationId)
                     if (linkedChestId == null) {
@@ -302,6 +310,7 @@ class H2DataHandler : DataHandler {
                         statement.setString(9, Serializers.ITEM_STACK.serialize(minion.getTool()))
                     }
                     statement.setLong(10, minion.getCharge())
+                    statement.setInt(11, minion.getBonusLootLevel())
                     statement.executeUpdate()
                 }
         }

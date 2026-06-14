@@ -54,6 +54,10 @@ interface Minion : InventoryHolder {
 
     fun setLevel(level: Int)
 
+    fun getBonusLootLevel(): Int
+
+    fun setBonusLootLevel(level: Int)
+
     fun getData(key: String): String?
 
     fun hasData(key: String): Boolean
