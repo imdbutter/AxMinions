@@ -13,7 +13,11 @@ import com.artillexstudios.axminions.api.utils.fastFor
 import com.artillexstudios.axminions.api.warnings.Warnings
 import com.artillexstudios.axminions.integrations.generators.UltimateGeneratorsHook
 import com.artillexstudios.axminions.minions.MinionTicker
+<<<<<<< HEAD
 import com.artillexstudios.axminions.minions.utils.MinionLoot
+=======
+import com.artillexstudios.axminions.utils.Enchantments
+>>>>>>> a68f00f86907d89fba3022db208a996ef151602e
 import com.artillexstudios.axminions.nms.NMSHandler
 import dev.lone.itemsadder.api.CustomBlock
 import me.kryniowesegryderiusz.kgenerators.Main
@@ -21,7 +25,6 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.BlockFace
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.DoubleChestInventory
 import org.bukkit.inventory.FurnaceRecipe
 import java.util.*
@@ -56,7 +59,7 @@ class MinerMinionType : MinionType("miner", AxMinionsPlugin.INSTANCE.getResource
     override fun onToolDirty(minion: Minion) {
         val minionImpl = minion as com.artillexstudios.axminions.minions.Minion
         minionImpl.setRange(getDouble("range", minion.getLevel()))
-        val tool = minion.getTool()?.getEnchantmentLevel(Enchantment.DIG_SPEED)?.div(10.0) ?: 0.1
+        val tool = Enchantments.EFFICIENCY?.let { minion.getTool()?.getEnchantmentLevel(it)?.div(10.0) } ?: 0.1
         val efficiency = 1.0 - if (tool > 0.9) 0.9 else tool
         minionImpl.setNextAction((getLong("speed", minion.getLevel()) * efficiency).roundToInt())
 
